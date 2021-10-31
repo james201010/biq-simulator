@@ -1,0 +1,77 @@
+!!com.appdynamics.cloud.modern.config.BiQSimulatorConfig
+
+loggingLevel: "info"  # options are ( info | debug | trace )
+
+eventsServiceConfig:
+  eventsServiceEndpoint: "https://analytics.api.appdynamics.com:443"
+  eventsServiceApikey: ""
+  controllerGlobalAccount: ""
+
+
+biqEventsSources:
+
+  - schemaName: "biqsim_p2p_source"
+    numberOfThreads: 10  # the number of threads dedicated to this biq events source to process in parallel
+    criteriaSchemaFieldName: "DOC_STATUS"  # 
+    primaryKeySchemaFieldName: "DOC_ID"    # 
+    primaryKeyPrefix: "PO"                 #
+    primaryKeyStartNumber: 10000           #
+    primaryKeyPersistanceFile: "./conf/p2p/lastPrimaryKey.txt"
+    startDelay: 3  # the starting delay in seconds between each biz journey 
+    
+    biqMilestones:
+      - milestoneName: "M1-PO-Created"
+        criteriaSchemaFieldValue: "POR"
+        time2NextMilestoneLower: 450  # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 540  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 10   # the value here for this first milestone must be equal to the value of 'numberOfThreads'
+
+      - milestoneName: "M2-Goods-Receipt"
+        criteriaSchemaFieldValue: "GR"
+        time2NextMilestoneLower: 320  # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 420  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 10   # the value here for this milestone must be less than or equal to the value from the previous milestone
+
+      - milestoneName: "M3-SES"
+        criteriaSchemaFieldValue: "ZSES"
+        time2NextMilestoneLower: 520  # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 610  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 8    # the value here for this milestone must be less than or equal to the value from the previous milestone
+
+      - milestoneName: "M4-Invoice"
+        criteriaSchemaFieldValue: "ZINV"      
+        time2NextMilestoneLower: 710  # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 910  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 7    # the value here for this milestone must be less than or equal to the value from the previous milestone
+
+      - milestoneName: "M5-Payment"
+        criteriaSchemaFieldValue: "ZPAY"      
+        time2NextMilestoneLower: 2  # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 3  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 7  # the value here for this milestone must be less than or equal to the value from the previous milestone
+
+
+    schemaFields:  # valid data types = boolean, date, float, integer, string  
+
+      - fieldName: "DOC_ID"
+        dataType: "string"
+        sampleDataFile: ""  
+        
+      - fieldName: "DOC_STATUS"
+        dataType: "string"
+        sampleDataFile: ""  
+
+      - fieldName: "NET_ORDER_PRICE"
+        dataType: "float"
+        sampleDataFile: "./conf/p2p/data-net-order-prices.txt"  
+
+      - fieldName: "SUPPLIER"
+        dataType: "string"
+        sampleDataFile: "./conf/p2p/data-suppliers.txt"  
+
+      - fieldName: "ACCOUNT_TYPE"
+        dataType: "string"
+        sampleDataFile: "./conf/p2p/data-account-types.txt"  
+
+  
+
