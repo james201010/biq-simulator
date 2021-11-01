@@ -46,9 +46,9 @@ biqEventsSources:
 
       - milestoneName: "M5-Payment"
         criteriaSchemaFieldValue: "ZPAY"      
-        time2NextMilestoneLower: 2    # the lower bound of delay in seconds before the next milestone is processed
-        time2NextMilestoneUpper: 3    # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
-        numberOfThreads2Publish: 19   # the value here for this milestone must be less than or equal to the value from the previous milestone
+        time2NextMilestoneLower: 1400  # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 1500  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 19    # the value here for this milestone must be less than or equal to the value from the previous milestone
 
 
     schemaFields:  # valid data types = boolean, date, float, integer, string  
