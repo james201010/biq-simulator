@@ -93,6 +93,8 @@ public class BiQActionsExecutor implements ApplicationConstants {
 
 		case ADBIQSIM_ACTION_DELETE:
 			
+			String deleteSchema = System.getProperty(ADBIQSIM_SCHEMA_KEY);
+			this.deleteSchema(deleteSchema);
 			break;
 
 		default:
@@ -108,7 +110,7 @@ public class BiQActionsExecutor implements ApplicationConstants {
 	// and when one driver is done with all the milestones in the biz journey, the driver calls back here to get 
 	// the next primary key and start another biz journey run
 	
-	public void publish(String publishAction) throws Throwable {
+	private void publish(String publishAction) throws Throwable {
 		
 		EventsServiceConfig eventsSrvcConfig = BIZ_SIM_CONF.getEventsServiceConfig();
 		
@@ -436,8 +438,9 @@ public class BiQActionsExecutor implements ApplicationConstants {
 		}
 	}
 	
-	private void deleteSchema(EventsServiceConfig eventsSrvcConfig, String schemaName) throws Throwable {
+	private void deleteSchema(String schemaName) throws Throwable {
 
+		EventsServiceConfig eventsSrvcConfig = BIZ_SIM_CONF.getEventsServiceConfig();
 		String accountName = eventsSrvcConfig.getControllerGlobalAccount();
 		String apiKey = eventsSrvcConfig.getEventsServiceApikey();
 		String restEndpoint = eventsSrvcConfig.getEventsServiceEndpoint() + "/events/schema/" + schemaName;
@@ -453,7 +456,7 @@ public class BiQActionsExecutor implements ApplicationConstants {
 		
 		response = client.execute(request);
 		
-		logr.trace("deleteSchema: HTTP Status Line = " + response.getStatusLine());
+		logr.info("deleteSchema: HTTP Status Line = " + response.getStatusLine());
 		logr.trace("deleteSchema: HTTP Entity = " + this.getResponseContent(response.getEntity().getContent(), ContentType.getOrDefault(response.getEntity()).getCharset()));
 
 		HttpClientUtils.closeQuietly(response);

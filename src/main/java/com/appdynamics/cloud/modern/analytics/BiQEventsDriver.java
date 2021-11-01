@@ -104,12 +104,28 @@ public class BiQEventsDriver implements ApplicationConstants, Runnable {
 			
 			
 		} else {
-			
+			// here we are initializing the schema with just one biz journey
+			try {
+				
+				this.initBizJourney();
+				for (int i = 0; i < this.bizJ.getMilestones().size(); i++) {
+					
+					BiQMilestone ms = this.bizJ.getMilestones().get(i);
+					this.publishEvent(ms);
+					
+					
+					//logr.carriageReturnInfo();
+					//logr.info("!!!!!!!!!!!!!!!!  TIME 2 SLEEP = " + result);
+					//logr.carriageReturnInfo();
+					
+					Thread.currentThread().sleep(2000);
+					
+				}				
+				
+			} catch (Throwable ex) {
+				ex.printStackTrace();
+			}
 		}
-		
-		
-		
-		
 		
 		
 	}
@@ -227,6 +243,7 @@ public class BiQEventsDriver implements ApplicationConstants, Runnable {
 		this.buildSingleMetricAttribute(buff, "eventTimestamp", "" + currTime, "float");
 				
 		buff.append("}]");
+		
 		
 		return buff.toString();
 		
