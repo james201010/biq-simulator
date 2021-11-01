@@ -84,9 +84,9 @@ public class BiQEventsDriver implements ApplicationConstants, Runnable {
 							int high = ms.getMilestoneConfig().getTime2NextMilestoneUpper() + 1;
 							int result = r.nextInt(high-low) + low;
 							
-							logr.carriageReturnInfo();
-							logr.info("!!!!!!!!!!!!!!!!  TIME 2 SLEEP = " + result);
-							logr.carriageReturnInfo();
+							logr.carriageReturnDebug();
+							logr.debug("!!!!!!!!!!!!!!!!  TIME 2 SLEEP = " + result);
+							logr.carriageReturnDebug();
 							
 							
 							Thread.currentThread().sleep(result * 1000);
