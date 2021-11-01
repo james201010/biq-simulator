@@ -91,6 +91,19 @@ public class BiQEventsDriver implements ApplicationConstants, Runnable {
 							
 							Thread.currentThread().sleep(result * 1000);
 							
+						} else {
+							
+							Random r = new Random();
+							int low = ms.getMilestoneConfig().getTime2NextMilestoneLower();
+							int high = ms.getMilestoneConfig().getTime2NextMilestoneUpper() + 1;
+							int result = r.nextInt(high-low) + low;
+							
+							logr.carriageReturnDebug();
+							logr.debug("!!!!!!!!!!!!!!!!  TIME 2 SLEEP = " + result);
+							logr.carriageReturnDebug();
+							
+							
+							Thread.currentThread().sleep(result * 1000);							
 						}
 					}
 					
@@ -302,7 +315,7 @@ public class BiQEventsDriver implements ApplicationConstants, Runnable {
 		HttpClientUtils.closeQuietly(httpClient);
 		httpClient = null;
 		
-		logr.info(payload);
+		logr.debug(payload);
 		
 	}
 	

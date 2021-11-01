@@ -10,8 +10,8 @@ eventsServiceConfig:
 
 biqEventsSources:
 
-  - schemaName: "biqsim_p2p_source"
-    numberOfThreads: 10  # the number of threads dedicated to this biq events source to process in parallel
+  - schemaName: "p2p_source"
+    numberOfThreads: 30  # the number of threads dedicated to this biq events source to process in parallel
     criteriaSchemaFieldName: "DOC_STATUS"  # 
     primaryKeySchemaFieldName: "DOC_ID"    # 
     primaryKeyPrefix: "PO"                 #
@@ -24,31 +24,31 @@ biqEventsSources:
         criteriaSchemaFieldValue: "POR"
         time2NextMilestoneLower: 450  # the lower bound of delay in seconds before the next milestone is processed
         time2NextMilestoneUpper: 540  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
-        numberOfThreads2Publish: 10   # the value here for this first milestone must be equal to the value of 'numberOfThreads'
+        numberOfThreads2Publish: 30   # the value here for this first milestone must be equal to the value of 'numberOfThreads'
 
       - milestoneName: "M2-Goods-Receipt"
         criteriaSchemaFieldValue: "GR"
         time2NextMilestoneLower: 320  # the lower bound of delay in seconds before the next milestone is processed
         time2NextMilestoneUpper: 420  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
-        numberOfThreads2Publish: 10   # the value here for this milestone must be less than or equal to the value from the previous milestone
+        numberOfThreads2Publish: 28   # the value here for this milestone must be less than or equal to the value from the previous milestone
 
       - milestoneName: "M3-SES"
         criteriaSchemaFieldValue: "ZSES"
         time2NextMilestoneLower: 520  # the lower bound of delay in seconds before the next milestone is processed
         time2NextMilestoneUpper: 610  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
-        numberOfThreads2Publish: 8    # the value here for this milestone must be less than or equal to the value from the previous milestone
+        numberOfThreads2Publish: 25   # the value here for this milestone must be less than or equal to the value from the previous milestone
 
       - milestoneName: "M4-Invoice"
         criteriaSchemaFieldValue: "ZINV"      
         time2NextMilestoneLower: 710  # the lower bound of delay in seconds before the next milestone is processed
         time2NextMilestoneUpper: 910  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
-        numberOfThreads2Publish: 7    # the value here for this milestone must be less than or equal to the value from the previous milestone
+        numberOfThreads2Publish: 22   # the value here for this milestone must be less than or equal to the value from the previous milestone
 
       - milestoneName: "M5-Payment"
         criteriaSchemaFieldValue: "ZPAY"      
-        time2NextMilestoneLower: 2  # the lower bound of delay in seconds before the next milestone is processed
-        time2NextMilestoneUpper: 3  # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
-        numberOfThreads2Publish: 7  # the value here for this milestone must be less than or equal to the value from the previous milestone
+        time2NextMilestoneLower: 2    # the lower bound of delay in seconds before the next milestone is processed
+        time2NextMilestoneUpper: 3    # the upper bound of delay in seconds before the next milestone is processed (this must be at least + 1 of the lower bound)
+        numberOfThreads2Publish: 19   # the value here for this milestone must be less than or equal to the value from the previous milestone
 
 
     schemaFields:  # valid data types = boolean, date, float, integer, string  
